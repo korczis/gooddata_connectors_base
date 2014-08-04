@@ -1,4 +1,4 @@
-module GooddataConnectorsBase
+module GoodDataConnectorsBase
 
   class DownloaderException < Exception
 

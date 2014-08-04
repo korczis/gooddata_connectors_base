@@ -5,11 +5,11 @@ require 'gooddata_connectors_base/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "gooddata_connectors_base"
-  spec.version       = GooddataConnectorsBase::VERSION
+  spec.version       = GoodDataConnectorsBase::VERSION
   spec.authors       = ["Adrian Toman"]
   spec.email         = ["adrian.toman@gooddata.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{This is base gem, used for defining connectors interface}
+  spec.summary       = %q{}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -20,4 +20,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_dependency "gooddata"
+  spec.add_dependency "aws-sdk"
 end

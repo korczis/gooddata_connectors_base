@@ -1,10 +1,10 @@
 module GoodDataConnectorsBase
 
-  class StringType < BaseType
+  class IntegerType < BaseType
 
 
-    def initialize(type,size)
-      super(type,size)
+    def initialize()
+      super("integer",size)
     end
 
   end

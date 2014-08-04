@@ -3,8 +3,8 @@ module GoodDataConnectorsBase
   class BooleanType < BaseType
 
 
-    def initialize(type, size = 0)
-      super(type,size)
+    def initialize()
+      super("boolean",0)
     end
 
   end
