@@ -1,6 +1,6 @@
 module GoodDataConnectorsBase
 
-  class TypeException < Exception
+  class BdsException < Exception
 
   end
 

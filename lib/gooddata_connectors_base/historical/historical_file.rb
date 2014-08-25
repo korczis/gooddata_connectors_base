@@ -17,7 +17,7 @@ module GoodDataConnectorsBase
     end
 
     def header
-      ["id","timestamp","value","is_deleted"]
+      ["id","timestamp","type","value","is_deleted"]
     end
 
     def save_to_file(filename)

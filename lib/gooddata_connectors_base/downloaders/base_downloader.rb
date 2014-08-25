@@ -10,16 +10,19 @@ module GoodDataConnectorsBase
       @configuration = @metadata.get_configuration_by_type(@TYPE)
       check_mandatory_configuration()
       merge_default_configuration()
+      add_entities()
       add_default_entities()
       prepare_folders()
     end
 
     def define_mandatory_configuration
-      raise NotImplemented, "The define_manadatory_configuration method need to be implemented"
+      {
+          "global" => ["bds_bucket","bds_folder","bds_access_key","bds_secret_key"]
+      }
     end
 
     def define_default_configuration
-      raise NotImplemented, "The define_manadatory_configuration method need to be implemented"
+      raise NotImplemented, "The define_default_configuration method need to be implemented"
     end
 
     def define_default_entities
@@ -40,6 +43,8 @@ module GoodDataConnectorsBase
       folder = @metadata.get_configuration_by_type("global")["bds_folder"]
       access_key = @metadata.get_configuration_by_type("global")["bds_access_key"]
       secret_key = @metadata.get_configuration_by_type("global")["bds_secret_key"]
+      schedule_id = @metadata.get_configuration_by_type("global")["schedule_id"]
+      execution_id = @metadata.get_configuration_by_type("global")["execution_id"]
 
       # Get an instance of the S3 interface.
       AWS.config({
@@ -48,13 +53,10 @@ module GoodDataConnectorsBase
                  })
       s3 = AWS::S3.new
       # Upload a file.
-
       ## TO DO CHANGE CESTA
-      key = File.basename(metadata_entity["downloaded_filename"])
-
-
-      s3.buckets[bucket].objects[folder].write(:file => metadata_entity["downloaded_filename"])
-      $log.info "Uploading file #{metadata_entity["downloaded_filename"]} to BDS storage."
+      key = File.basename(metadata_entity.get_history_field("downloaded_filename"))
+      s3.buckets[bucket].objects["#{folder}/#{schedule_id}/#{execution_id}/#{key}"].write(:file => metadata_entity.get_history_field("downloaded_filename"))
+      $log.info "Uploading file #{metadata_entity.get_history_field("downloaded_filename")} to BDS storage."
     end
 
 
@@ -70,6 +72,10 @@ module GoodDataConnectorsBase
 
     def add_default_entities
       @metadata.add_default_entities(define_default_entities)
+    end
+
+    def add_entities
+      @metadata.add_entities
     end
 
     def prepare_folders

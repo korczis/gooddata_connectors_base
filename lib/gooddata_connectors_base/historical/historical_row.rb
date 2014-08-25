@@ -5,15 +5,16 @@ module GoodDataConnectorsBase
 
     attr_accessor :id,:timestamp,:value,:is_deleted
 
-    def initialize(id,timestamp,value,is_deleted = false)
+    def initialize(id,timestamp,type,value,is_deleted = false)
       @id = id
       @timestamp  = timestamp
       @value = value
+      @type = type
       @is_deleted = is_deleted
     end
 
     def to_a
-      [@id,@timestamp,@value,@is_deleted]
+      [@id,@timestamp,@type.to_simple_string,@value,@is_deleted]
     end
 
 
