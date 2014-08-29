@@ -20,6 +20,10 @@ Or install it yourself as:
 
 TODO: Write usage instructions here
 
+## How to run tests 
+
+    . spec/test_credentials.sh; bundle exec rspec    
+
 ## Contributing
 
 1. Fork it
