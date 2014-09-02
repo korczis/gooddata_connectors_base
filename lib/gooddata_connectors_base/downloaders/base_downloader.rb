@@ -48,10 +48,27 @@ module GoodData
           downloaded_data = download(entity_metadata)
           # TODO download metadata using a subclass-defined function
           # TODO store metadata
-          backup(downloaded_data) unless @params['skip_backup']
-          # ?? put downloaded_data to the params?
+          downloaded_data = clean_up(downloaded_data) unless @params['skip_cleanup']
 
-          downloaded_data
+          downloaded_data = backup(downloaded_data) unless @params['skip_backup']
+          return downloaded_data
+        end
+
+        def clean_up(downloaded_data)
+          # iterate throught the downloaded files and keep onlhy those non-empty
+          downloaded_data['objects'].each do |k,v|
+            v['filenames'].select! do |f|
+              empty = is_file_empty(f)
+              FileUtils.rm(f) if empty
+              !empty
+            end
+          end
+
+          return downloaded_data
+        end
+
+        def is_file_empty(filename)
+          return false
         end
 
         def get_field_metada
@@ -63,7 +80,7 @@ module GoodData
         end
 
         def generate_filename(obj)
-          return File.join(@data_directory, "#{obj}-#{DateTime.now.to_i.to_s}.#{@format}")
+          return File.join(@data_directory, "#{obj}-#{DateTime.now.to_i.to_s}-#{rand(9999).to_s}.#{@format}")
         end
 
         private
