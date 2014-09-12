@@ -1,7 +1,7 @@
 module GoodData
   module Connectors
     module Base
-      class NotImplemented < Exception
+      class AdsException < Exception
 
       end
     end

@@ -1,8 +1,7 @@
 module GoodData
   module Connectors
     module Base
-      class NotImplemented < Exception
-
+      class ParseException < Exception
       end
     end
   end

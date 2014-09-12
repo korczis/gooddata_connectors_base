@@ -1,8 +1,7 @@
 module GoodData
   module Connectors
     module Base
-      class NotImplemented < Exception
-
+      class TemplateException < Exception
       end
     end
   end
