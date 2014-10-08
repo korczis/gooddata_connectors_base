@@ -39,7 +39,7 @@ module GoodData
           raise NotImplemented, "The download_entity need to be implemented"
         end
 
-        def backup_to_bds(metadata_entity,file)
+        def backup_to_bds(file)
           bucket = @metadata.get_configuration_by_type("global")["bds_bucket"]
           folder = @metadata.get_configuration_by_type("global")["bds_folder"]
           access_key = @metadata.get_configuration_by_type("global")["bds_access_key"]
