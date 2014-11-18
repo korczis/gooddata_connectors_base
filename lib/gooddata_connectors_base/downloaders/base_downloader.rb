@@ -8,7 +8,7 @@ module GoodData
         def initialize(metadata,options = {})
           @metadata = metadata
           @data_directory = "source/downloader/"
-          @configuration = @metadata.get_configuration_by_type(@TYPE)
+          @configuration = @metadata.get_configuration_by_type(@type)
           check_mandatory_configuration()
           merge_default_configuration()
           add_entities()
