@@ -44,7 +44,7 @@ module GoodData
           folder = @metadata.get_configuration_by_type("global")["bds_folder"]
           access_key = @metadata.get_configuration_by_type("global")["bds_access_key"]
           secret_key = @metadata.get_configuration_by_type("global")["bds_secret_key"]
-          schedule_id = @metadata.get_configuration_by_type("global")["schedule_id"]
+          schedule_id = @metadata.get_configuration_by_type("global")["schedule_id"] || 0
           execution_id = @metadata.get_configuration_by_type("global")["execution_id"]
 
           # Get an instance of the S3 interface.
@@ -56,8 +56,14 @@ module GoodData
           # Upload a file.
           ## TO DO CHANGE CESTA
           key = File.basename(file)
-          s3.buckets[bucket].objects["#{folder}/#{schedule_id}/#{execution_id}/#{key}"].write(:file => file)
-          $log.info "Uploading file #{file} to BDS storage."
+          s3_path = "#{folder}/#{schedule_id}/#{execution_id}/#{key}"
+          s3_obj = s3.buckets[bucket].objects[s3_path]
+          begin
+            $log.info "Uploading file #{file} to BDS storage s3://#{s3_path}."
+            s3_obj.write(:file => file)
+          rescue => e
+            puts e.inspect
+          end
         end
 
 
